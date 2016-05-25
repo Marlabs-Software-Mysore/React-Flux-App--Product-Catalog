@@ -13,5 +13,9 @@ This is product catalog display application, developed using react js and routin
 1. NodeJs
 2. JS file editor ex. VSCode, Sublime or Notepad++.
 
+# Features -
+1.Add Product.
+2.Product Listing.
+
 
 
