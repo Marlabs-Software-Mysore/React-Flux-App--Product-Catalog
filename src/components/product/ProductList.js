@@ -2,7 +2,6 @@
 
 var React = require('react');
 var Router = require('react-router');
-var router = require('react-router-component');
 var Link = Router.Link;
 var Navigation = Router.Navigation;
 var ProductActions = require('../../actions/ProductActions');
@@ -31,13 +30,7 @@ var ProductList = React.createClass({
           "width": "150px",
           "height": "150px"
       };
-        var imgStyle1 = {
-          "width": "100%"
-      };
-        var divStyle = {
-          "height": "400px"
-      };
-       var imgStyle2 = {
+       var carouselImageStyle = {
          "height": "350px",
          "width": "100%"
       };
@@ -64,7 +57,7 @@ var ProductList = React.createClass({
                          </ol>
                             <div className="carousel-inner" role="listbox">
                             <div className="item active">
-                            <img style={imgStyle2} src="images/reactjsimage.jpg" />
+                            <img style={carouselImageStyle} src="images/reactjsimage.jpg" />
                              <div className="carousel-caption">
                             <p>React (sometimes styled React.js or ReactJS) is an open-source JavaScript library providing a view for data, rendered as HTML. 
                              React views are typically rendered using components that contain additional components specified as custom HTML tags.
@@ -73,7 +66,7 @@ var ProductList = React.createClass({
                             </div>
                             </div>
                         <div className="item">
-                            <img style={imgStyle2} src="images/flux-logo1.png"/>
+                            <img style={carouselImageStyle} src="images/flux-logo1.png"/>
                             <div className="carousel-caption">
                           <h3>Flux Architercture</h3>
                             <p>Flux is the application architecture that Facebook uses for building client-side web applications.
@@ -83,7 +76,7 @@ var ProductList = React.createClass({
                         </div>
                         
                         <div className="item">
-                             <img style={imgStyle2} src="images/nodejs-frameworks.png"/>
+                             <img style={carouselImageStyle} src="images/nodejs-frameworks.png"/>
                                <div className="carousel-caption">
                             <p>
                              In software development, Node.js is an open-source, cross-platform runtime environment for developing server-side Web applications.

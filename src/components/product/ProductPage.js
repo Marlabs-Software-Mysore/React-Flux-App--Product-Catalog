@@ -2,7 +2,6 @@
 
 var React = require('react');
 var Router = require('react-router');
-var router = require('react-router-component');
 var Link = require('react-router').Link;
 var ProductStore = require('../../stores/ProductStore');
 var ProductActions = require('../../actions/ProductActions');
