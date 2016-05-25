@@ -46593,12 +46593,10 @@ var ProductList = React.createClass({displayName: "ProductList",
                 React.createElement("div", {className: "col-md-3"}, 
                     React.createElement("h2", null, "Application uses"), 
                     React.createElement("ul", null, 
-                        React.createElement("li", null, "React Js."), 
-                        React.createElement("li", null, "Flux Architecture."), 
-                        React.createElement("li", null, "Node Js."), 
-                        React.createElement("li", null, "Gulp."), 
-                        React.createElement("li", null, "Lodash"), 
-                       React.createElement("li", null, " Theming using Bootstrap")
+                         React.createElement("li", null, React.createElement("a", {href: "https://facebook.github.io/react/docs/tutorial.html"}, "React Js"), " is a JavaScript library for creating user interfaces by Facebook"), 
+                        React.createElement("li", null, React.createElement("a", {href: "https://facebook.github.io/flux/docs/overview.html"}, " Flux architecture "), " uses for building client-side web applications"), 
+                        React.createElement("li", null, React.createElement("a", {href: "http://go.microsoft.com/fwlink/?LinkId=518007"}, "Gulp"), " and ", React.createElement("a", {href: "http://go.microsoft.com/fwlink/?LinkId=518004"}, "Node"), " for managing client-side libraries"), 
+                       React.createElement("li", null, "Theming using ", React.createElement("a", {href: "http://go.microsoft.com/fwlink/?LinkID=398939"}, "Bootstrap"))
                     )
                 ), 
                 React.createElement("div", {className: "col-md-9"}, 

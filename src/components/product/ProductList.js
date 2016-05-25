@@ -102,12 +102,10 @@ var ProductList = React.createClass({
                 <div className="col-md-3">
                     <h2>Application uses</h2>
                     <ul>
-                        <li>React Js.</li>
-                        <li>Flux Architecture.</li>
-                        <li>Node Js.</li>
-                        <li>Gulp.</li>
-                        <li>Lodash</li>
-                       <li> Theming using Bootstrap</li>
+                         <li><a href="https://facebook.github.io/react/docs/tutorial.html">React Js</a> is a JavaScript library for creating user interfaces by Facebook</li>
+                        <li><a href="https://facebook.github.io/flux/docs/overview.html"> Flux architecture </a> uses for building client-side web applications</li>
+                        <li><a href="http://go.microsoft.com/fwlink/?LinkId=518007">Gulp</a> and <a href="http://go.microsoft.com/fwlink/?LinkId=518004">Node</a> for managing client-side libraries</li>
+                       <li>Theming using <a href="http://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
                     </ul>
                 </div>
                 <div className="col-md-9">
