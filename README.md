@@ -1,5 +1,5 @@
 # React-Flux-App--Product-Catalog
-This is product catalog display application, developed using react js and routing components.
+This is product catalog display application, developed using react js, flux-architecture and routing components.
 
 # Steps to run application
 1.Clone the application or download it.
@@ -17,6 +17,15 @@ This is product catalog display application, developed using react js and routin
 1.Add Product.
 
 2.Product Listing.
+
+# Components used -
+1.React js.
+
+2.Flux Architecture.
+
+3.React routing.
+
+4.Gulp (https://travismaynard.com/writing/getting-started-with-gulp)
 
 
 
