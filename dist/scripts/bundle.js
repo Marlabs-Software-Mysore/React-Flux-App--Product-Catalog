@@ -46358,12 +46358,10 @@ var Header = React.createClass({displayName: "Header",
 		return (
         React.createElement("nav", {className: "navbar navbar-inverse", style: headerstyle}, 
           React.createElement("div", {className: "container"}, 
-               React.createElement("a", {className: "navbar-brand", href: "#"}, "React Application Demo"), 
+               React.createElement("a", {className: "navbar-brand", href: "#"}, "React Application Framework"), 
               React.createElement("ul", {className: "nav navbar-nav"}, 
                 React.createElement("li", null, React.createElement(Link, {to: "app"}, "Home")), 
-                React.createElement("li", null, React.createElement(Link, {to: "Products"}, "Products List")), 
                 React.createElement("li", null, React.createElement(Link, {to: "addProduct"}, "Add Product"))
-
               )
           )
         )
@@ -46501,8 +46499,11 @@ var Input = require('../common/textInput');
 var toastr = require('toastr');
 
 var ProductList = React.createClass({displayName: "ProductList",
-	propTypes: {
-		Products: React.PropTypes.array.isRequired
+     getInitialState: function(){
+		return {
+            hovered: false,            
+            TProducts: this.props.Products
+        };
 	},
 
 	deleteProduct: function(id, event) {
@@ -46510,101 +46511,143 @@ var ProductList = React.createClass({displayName: "ProductList",
 		ProductActions.deleteProduct(id);
 		toastr.success('Product Deleted');
 	},
-
-	render: function() {
+   
+    handleChange: function(e){
+        var searchString = e.target.value.toLowerCase();                      
+        if(searchString.length > 0){
+            var tempProducts = this.state.TProducts;
+            tempProducts = tempProducts.filter(function(l){
+                return l.Name.toLowerCase().match(searchString);
+            });
+            this.setState({TProducts: tempProducts});
+        }
+        else if(searchString.length === 0){
+            this.setState({TProducts: this.props.Products});
+        }                          
+    },
+	render: function() {        
          var requiredDivStyle = {
           "border": "1px solid #9badb4",
           "border-top": "5px solid #9badb4",
-          "border-radius": "0"
+          "border-radius": "30"
         };
       var imgStyle = {
           "width": "150px",
           "height": "150px"
       };
-       var carouselImageStyle = {
-         "height": "350px",
+        var imgStyle1 = {
+          "width": "100%"
+      };
+        var divStyle = {
+          "height": "400px"
+      };
+       var imgStyle2 = {
+         "height": "400px",
          "width": "100%"
       };
-      
+      var paragraphStyle = {
+          "font-size": "20px"
+      };
+      var thumnailStyle = {
+         "border": "1px solid #9badb4",
+      "border-radius": "30px",  
+      "background": "#f3f3f3"
+      };
 		var createProductRow = function(Product) {
 			return (
-                React.createElement("div", {className: "col-md-3", style: requiredDivStyle}, 
-                React.createElement(Link, {to: "manageProduct", params: {id: Product.id}}, React.createElement("img", {style: imgStyle, className: "img-responsive", src: Product.Image})), 
-                    React.createElement("h3", null, Product.Name), 
-                    React.createElement("h3", null, Product.Price), 
-                    React.createElement("p", null, Product.Description)
+                React.createElement("div", {className: "col-md-3 col-md-offset-1"}, 
+                       React.createElement("div", {className: "thumbnail"}, 
+                            React.createElement(Link, {to: "manageProduct", params: {id: Product.id}}, React.createElement("img", {style: imgStyle, className: "img-responsive", src: Product.Image})), 
+                            React.createElement("h3", null, Product.Name), 
+                            React.createElement("h3", null, Product.Price), 
+                            React.createElement("p", null, Product.Description)
+                     )
                 )
 			);
 		};
 		return (
 			React.createElement("div", {className: "container-fluid"}, 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement("div", {className: "col-md-12"}, 
+                    
                      React.createElement("div", {id: "myCarousel", className: "carousel slide ", "data-ride": "carousel"}, 
                          React.createElement("ol", {className: "carousel-indicators"}, 
                           React.createElement("li", {"data-target": "#myCarousel", "data-slide-to": "0", className: "active"}), 
                             React.createElement("li", {"data-target": "#myCarousel", "data-slide-to": "1"}), 
                             React.createElement("li", {"data-target": "#myCarousel", "data-slide-to": "2"})
                          ), 
-                            React.createElement("div", {className: "carousel-inner", role: "listbox"}, 
-                            React.createElement("div", {className: "item active"}, 
-                            React.createElement("img", {style: carouselImageStyle, src: "images/reactjsimage.jpg"}), 
-                             React.createElement("div", {className: "carousel-caption"}, 
-                            React.createElement("p", null, "React (sometimes styled React.js or ReactJS) is an open-source JavaScript library providing a view for data, rendered as HTML." + ' ' + 
-                             "React views are typically rendered using components that contain additional components specified as custom HTML tags."
+                                React.createElement("div", {className: "carousel-inner", role: "listbox"}, 
+                                    React.createElement("div", {className: "item active"}, 
+                                         React.createElement("img", {style: imgStyle2, src: "images/reactjsimage.jpg"}), 
+                                              React.createElement("div", {className: "carousel-caption"}, 
+                                                React.createElement("p", {style: paragraphStyle}, " React is an open-source JavaScript library." 
+                                                ), 
+                                      React.createElement("br", null), 
+                                             React.createElement("a", {className: "btn btn-default", target: "_blank", href: "https://facebook.github.io/react/docs/tutorial.html"}, "Learn more")
+                                            )
+                                    ), 
+                                    React.createElement("div", {className: "item"}, 
+                                        React.createElement("img", {style: imgStyle2, src: "images/flux-logo1.png"}), 
+                                        React.createElement("div", {className: "carousel-caption"}, 
+                                    React.createElement("h3", null, "Flux Architercture"), 
+                                    React.createElement("br", null), 
+                                        React.createElement("p", {style: paragraphStyle}, "Flux architecture  uses for building client-side web applications. "), 
+                                        React.createElement("br", null), 
+                                        React.createElement("a", {className: "btn btn-default", target: "_blank", href: "https://facebook.github.io/flux/docs/overview.html"}, "Learn more")
+                                        )
+                                    ), 
+                                    
+                                    React.createElement("div", {className: "item"}, 
+                                        React.createElement("img", {style: imgStyle2, src: "images/nodejs-frameworks.png"}), 
+                                        React.createElement("div", {className: "carousel-caption"}, 
+                                        React.createElement("p", {style: paragraphStyle}, 
+                                        "Node.js is a very powerful JavaScript-based framework/platform."
+                                        ), 
+                                        React.createElement("br", null), 
+                                        React.createElement("a", {className: "btn btn-default", target: "_blank", href: "http://www.tutorialspoint.com/nodejs/"}, "Learn more")
+                                        )
+                                    )
+                                    ), 
+                                    React.createElement("a", {className: "left carousel-control", href: "#myCarousel", role: "button", "data-slide": "prev"}, 
+                                    React.createElement("span", {className: "glyphicon glyphicon-chevron-left", "aria-hidden": "true"}), 
+                                    React.createElement("span", {className: "sr-only"}, "Previous")
+                                    ), 
+                                    React.createElement("a", {className: "right carousel-control", href: "#myCarousel", role: "button", "data-slide": "next"}, 
+                                    React.createElement("span", {className: "glyphicon glyphicon-chevron-right", "aria-hidden": "true"}), 
+                                    React.createElement("span", {className: "sr-only"}, "Next")
+                                    )
+                                )
+                           
                             ), 
-                            React.createElement("a", {className: "btn btn-default", target: "_blank", href: "https://facebook.github.io/react/docs/tutorial.html"}, "Learn more")
-                            )
-                            ), 
-                        React.createElement("div", {className: "item"}, 
-                            React.createElement("img", {style: carouselImageStyle, src: "images/flux-logo1.png"}), 
-                            React.createElement("div", {className: "carousel-caption"}, 
-                          React.createElement("h3", null, "Flux Architercture"), 
-                            React.createElement("p", null, "Flux is the application architecture that Facebook uses for building client-side web applications."
-                            ), 
-                            React.createElement("a", {className: "btn btn-default", target: "_blank", href: "https://facebook.github.io/flux/docs/overview.html"}, "Learn more")
-                            )
-                        ), 
-                        
-                        React.createElement("div", {className: "item"}, 
-                             React.createElement("img", {style: carouselImageStyle, src: "images/nodejs-frameworks.png"}), 
-                               React.createElement("div", {className: "carousel-caption"}, 
-                            React.createElement("p", null, 
-                             "In software development, Node.js is an open-source, cross-platform runtime environment for developing server-side Web applications."
-                            ), 
-                            React.createElement("a", {className: "btn btn-default", target: "_blank", href: "http://www.tutorialspoint.com/nodejs/"}, "Learn more")
+                            
+                            React.createElement("div", {className: "row"}, 
+                                 React.createElement("div", {className: "col-md-3"}, 
+                                     React.createElement("h2", null, "Application uses"), 
+                                         React.createElement("ul", {className: "app-uses"}, 
+                                                React.createElement("li", null, React.createElement("a", {href: "https://facebook.github.io/react/docs/tutorial.html"}, "React Js"), " is a JavaScript library for creating user interfaces by Facebook"), 
+                                                React.createElement("li", null, React.createElement("a", {href: "https://facebook.github.io/flux/docs/overview.html"}, " Flux architecture "), " uses for building client-side web applications"), 
+                                                React.createElement("li", null, React.createElement("a", {href: "http://go.microsoft.com/fwlink/?LinkId=518007"}, "Gulp"), " and ", React.createElement("a", {href: "http://go.microsoft.com/fwlink/?LinkId=518004"}, "Node"), " for managing client-side libraries"), 
+                                                React.createElement("li", null, "Theming using ", React.createElement("a", {href: "http://go.microsoft.com/fwlink/?LinkID=398939"}, "Bootstrap"))
+                                        )
+                                ), 
+                          React.createElement("div", {className: "col-md-9"}, 
+                                React.createElement("h2", null, "Product List"), 
+                             React.createElement("div", {className: "row"}, 
+                                 React.createElement("div", {className: "col-md-4"}, 
+                                     React.createElement("div", {className: "input-group"}, 
+                                        React.createElement("input", {type: "text", className: "form-control", onChange: this.handleChange, ref: "bookTitleInput", placeholder: "Search product name"}), 
+                                             React.createElement("span", {className: "input-group-addon"}, 
+                                            React.createElement("i", {className: "glyphicon glyphicon-search"})
+                                             )
                             )
                         )
-                        ), 
-
-                        React.createElement("a", {className: "left carousel-control", href: "#myCarousel", role: "button", "data-slide": "prev"}, 
-                        React.createElement("span", {className: "glyphicon glyphicon-chevron-left", "aria-hidden": "true"}), 
-                        React.createElement("span", {className: "sr-only"}, "Previous")
-                        ), 
-                        React.createElement("a", {className: "right carousel-control", href: "#myCarousel", role: "button", "data-slide": "next"}, 
-                        React.createElement("span", {className: "glyphicon glyphicon-chevron-right", "aria-hidden": "true"}), 
-                        React.createElement("span", {className: "sr-only"}, "Next")
-                        )
-                    )
-                  )
-                 ), 
-                 
-             React.createElement("div", {className: "row"}, 
-                React.createElement("div", {className: "col-md-3"}, 
-                    React.createElement("h2", null, "Application uses"), 
-                    React.createElement("ul", null, 
-                         React.createElement("li", null, React.createElement("a", {href: "https://facebook.github.io/react/docs/tutorial.html"}, "React Js"), " is a JavaScript library for creating user interfaces by Facebook"), 
-                        React.createElement("li", null, React.createElement("a", {href: "https://facebook.github.io/flux/docs/overview.html"}, " Flux architecture "), " uses for building client-side web applications"), 
-                        React.createElement("li", null, React.createElement("a", {href: "http://go.microsoft.com/fwlink/?LinkId=518007"}, "Gulp"), " and ", React.createElement("a", {href: "http://go.microsoft.com/fwlink/?LinkId=518004"}, "Node"), " for managing client-side libraries"), 
-                       React.createElement("li", null, "Theming using ", React.createElement("a", {href: "http://go.microsoft.com/fwlink/?LinkID=398939"}, "Bootstrap"))
-                    )
-                ), 
-                React.createElement("div", {className: "col-md-9"}, 
-                    React.createElement("h1", null, "Product List"), 
-                    this.props.Products.map(createProductRow, this)
+                    ), 
+                React.createElement("br", null), 
+                React.createElement("div", {className: "row"}, 
+                     this.state.TProducts.map(createProductRow, this)
                 )
-            )
-            )
+              )
+         )
+    )
 		);
 	}
 });

@@ -12,12 +12,10 @@ var Header = React.createClass({
 		return (
         <nav className="navbar navbar-inverse" style={headerstyle}>
           <div className="container">
-               <a className="navbar-brand" href="#">React Application Demo</a>
+               <a className="navbar-brand" href="#">React Application Framework</a>
               <ul className="nav navbar-nav">
                 <li><Link to="app">Home</Link></li>
-                <li><Link to="Products">Products List</Link></li>
                 <li><Link to="addProduct">Add Product</Link></li>
-
               </ul>
           </div>
         </nav>
