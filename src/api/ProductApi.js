@@ -10,6 +10,7 @@ var _generateId = function(Product) {
 };
 
 var _clone = function(item) {
+	
 	return JSON.parse(JSON.stringify(item)); //return cloned copy so that the item is passed by value instead of by reference
 };
 
