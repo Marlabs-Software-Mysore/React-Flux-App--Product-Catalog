@@ -1,6 +1,8 @@
 "use strict";
 
 var React = require('react');
+var Router = require('react-router');
+var Link = Router.Link;
 var Input = require('../common/textInput');
 
 var ProductForm = React.createClass({
