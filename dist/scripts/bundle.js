@@ -46360,8 +46360,7 @@ var Header = React.createClass({displayName: "Header",
           React.createElement("div", {className: "container"}, 
                React.createElement("a", {className: "navbar-brand", href: "#"}, "React Application Framework"), 
               React.createElement("ul", {className: "nav navbar-nav"}, 
-                React.createElement("li", null, React.createElement(Link, {to: "app"}, "Home")), 
-                React.createElement("li", null, React.createElement(Link, {to: "addProduct"}, "Add Product"))
+                React.createElement("li", null, React.createElement(Link, {to: "app"}, "Home"))
               )
           )
         )
@@ -46569,7 +46568,7 @@ var ProductList = React.createClass({displayName: "ProductList",
 			React.createElement("div", {className: "container-fluid"}, 
                 React.createElement("div", {className: "row"}, 
                     
-                     React.createElement("div", {id: "myCarousel", className: "carousel slide ", "data-ride": "carousel"}, 
+                     React.createElement("div", {id: "myCarousel", className: "carousel slide", "data-ride": "carousel"}, 
                          React.createElement("ol", {className: "carousel-indicators"}, 
                           React.createElement("li", {"data-target": "#myCarousel", "data-slide-to": "0", className: "active"}), 
                             React.createElement("li", {"data-target": "#myCarousel", "data-slide-to": "1"}), 
@@ -46586,7 +46585,7 @@ var ProductList = React.createClass({displayName: "ProductList",
                                             )
                                     ), 
                                     React.createElement("div", {className: "item"}, 
-                                        React.createElement("img", {style: imgStyle2, src: "images/flux-logo1.png"}), 
+                                        React.createElement("img", {style: imgStyle2, src: "images/fluxArchitecture.png"}), 
                                         React.createElement("div", {className: "carousel-caption"}, 
                                     React.createElement("h3", null, "Flux Architercture"), 
                                     React.createElement("br", null), 
@@ -46618,7 +46617,6 @@ var ProductList = React.createClass({displayName: "ProductList",
                                 )
                            
                             ), 
-                            
                             React.createElement("div", {className: "row"}, 
                                  React.createElement("div", {className: "col-md-3"}, 
                                      React.createElement("h2", null, "Application uses"), 
@@ -46629,8 +46627,16 @@ var ProductList = React.createClass({displayName: "ProductList",
                                                 React.createElement("li", null, "Theming using ", React.createElement("a", {href: "http://go.microsoft.com/fwlink/?LinkID=398939"}, "Bootstrap"))
                                         )
                                 ), 
+                                React.createElement("br", null), 
                           React.createElement("div", {className: "col-md-9"}, 
-                                React.createElement("h2", null, "Product List"), 
+                          React.createElement("div", {className: "row"}, 
+                          React.createElement("div", {className: "col-md-3"}, 
+                                React.createElement("h2", null, "Product List")
+                          ), 
+                          React.createElement("div", {className: "col-md-3 col-md-offset-6"}, 
+                               React.createElement(Link, {to: "addProduct", className: "btn btn-link"}, "Add Product")
+                          )
+                          ), 
                              React.createElement("div", {className: "row"}, 
                                  React.createElement("div", {className: "col-md-4"}, 
                                      React.createElement("div", {className: "input-group"}, 

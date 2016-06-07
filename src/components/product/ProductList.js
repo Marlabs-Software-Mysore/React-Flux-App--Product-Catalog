@@ -80,7 +80,7 @@ var ProductList = React.createClass({
 			<div className="container-fluid">
                 <div className="row">
                     
-                     <div id="myCarousel" className="carousel slide " data-ride="carousel">
+                     <div id="myCarousel" className="carousel slide" data-ride="carousel">
                          <ol className="carousel-indicators">
                           <li data-target="#myCarousel" data-slide-to="0" className="active"></li>
                             <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -97,7 +97,7 @@ var ProductList = React.createClass({
                                             </div>
                                     </div>
                                     <div className="item">
-                                        <img style={imgStyle2} src="images/flux-logo1.png"/>
+                                        <img style={imgStyle2} src="images/fluxArchitecture.png"/>
                                         <div className="carousel-caption">
                                     <h3>Flux Architercture</h3>
                                     <br/>
@@ -129,7 +129,6 @@ var ProductList = React.createClass({
                                 </div>
                            
                             </div>
-                            
                             <div className="row">
                                  <div className="col-md-3">
                                      <h2>Application uses</h2>
@@ -140,8 +139,16 @@ var ProductList = React.createClass({
                                                 <li>Theming using <a href="http://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
                                         </ul>
                                 </div>
+                                <br/>
                           <div className="col-md-9">
+                          <div className="row">
+                          <div className="col-md-3">
                                 <h2>Product List</h2>
+                          </div>
+                          <div className="col-md-3 col-md-offset-6">
+                               <Link to="addProduct" className="btn btn-link">Add Product</Link>
+                          </div>
+                          </div>
                              <div className="row">
                                  <div className="col-md-4">
                                      <div className="input-group">

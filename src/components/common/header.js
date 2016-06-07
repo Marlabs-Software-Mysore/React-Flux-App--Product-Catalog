@@ -15,7 +15,6 @@ var Header = React.createClass({
                <a className="navbar-brand" href="#">React Application Framework</a>
               <ul className="nav navbar-nav">
                 <li><Link to="app">Home</Link></li>
-                <li><Link to="addProduct">Add Product</Link></li>
               </ul>
           </div>
         </nav>
