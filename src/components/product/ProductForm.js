@@ -38,7 +38,7 @@ var ProductForm = React.createClass({
 					value={this.props.Product.Price}
 					onChange={this.props.onChange}
 					/>
-				  <div className="col-md-1">
+                    <div className="col-md-1">
 				<input type="submit" value="Save" className="btn btn-info" onClick={this.props.onSave}/>
                 </div>
 				<Link className="btn btn-link" to="app">Cancel</Link>

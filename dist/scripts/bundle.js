@@ -305,6 +305,31 @@ function isUndefined(arg) {
 // shim for using process in browser
 
 var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+(function () {
+  try {
+    cachedSetTimeout = setTimeout;
+  } catch (e) {
+    cachedSetTimeout = function () {
+      throw new Error('setTimeout is not defined');
+    }
+  }
+  try {
+    cachedClearTimeout = clearTimeout;
+  } catch (e) {
+    cachedClearTimeout = function () {
+      throw new Error('clearTimeout is not defined');
+    }
+  }
+} ())
 var queue = [];
 var draining = false;
 var currentQueue;
@@ -329,7 +354,7 @@ function drainQueue() {
     if (draining) {
         return;
     }
-    var timeout = setTimeout(cleanUpNextTick);
+    var timeout = cachedSetTimeout(cleanUpNextTick);
     draining = true;
 
     var len = queue.length;
@@ -346,7 +371,7 @@ function drainQueue() {
     }
     currentQueue = null;
     draining = false;
-    clearTimeout(timeout);
+    cachedClearTimeout(timeout);
 }
 
 process.nextTick = function (fun) {
@@ -358,7 +383,7 @@ process.nextTick = function (fun) {
     }
     queue.push(new Item(fun, args));
     if (queue.length === 1 && !draining) {
-        setTimeout(drainQueue, 0);
+        cachedSetTimeout(drainQueue, 0);
     }
 };
 
@@ -46207,6 +46232,7 @@ var _generateId = function(Product) {
 };
 
 var _clone = function(item) {
+	
 	return JSON.parse(JSON.stringify(item)); //return cloned copy so that the item is passed by value instead of by reference
 };
 
@@ -46442,6 +46468,8 @@ module.exports = NotFoundPage;
 "use strict";
 
 var React = require('react');
+var Router = require('react-router');
+var Link = Router.Link;
 var Input = require('../common/textInput');
 
 var ProductForm = React.createClass({displayName: "ProductForm",
@@ -46477,7 +46505,10 @@ var ProductForm = React.createClass({displayName: "ProductForm",
 					value: this.props.Product.Price, 
 					onChange: this.props.onChange}
 					), 
-				React.createElement("input", {type: "submit", value: "Save", className: "btn btn-default", onClick: this.props.onSave})
+                    React.createElement("div", {className: "col-md-1"}, 
+				React.createElement("input", {type: "submit", value: "Save", className: "btn btn-info", onClick: this.props.onSave})
+                ), 
+				React.createElement(Link, {className: "btn btn-link", to: "app"}, "Cancel")
 			)
 		);
 	}
@@ -46485,7 +46516,7 @@ var ProductForm = React.createClass({displayName: "ProductForm",
 
 module.exports = ProductForm;
 
-},{"../common/textInput":214,"react":205}],217:[function(require,module,exports){
+},{"../common/textInput":214,"react":205,"react-router":33}],217:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
