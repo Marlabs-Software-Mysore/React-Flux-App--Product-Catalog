@@ -46665,7 +46665,7 @@ var ProductList = React.createClass({displayName: "ProductList",
                                 React.createElement("h2", null, "Product List")
                           ), 
                           React.createElement("div", {className: "col-md-3 col-md-offset-6"}, 
-                               React.createElement(Link, {to: "addProduct", className: "btn btn-link"}, "Add Product")
+                               React.createElement(Link, {to: "addProduct", className: "btn btn-primary"}, "Add Product")
                           )
                           ), 
                              React.createElement("div", {className: "row"}, 
@@ -46825,7 +46825,7 @@ var ManageProductPage = React.createClass({displayName: "ManageProductPage",
 		}
 		
 		this.setState({dirty: false});
-		toastr.success('Product saved.');
+		toastr.success('Product saved successfully.');
 		this.transitionTo('Products');
 	},
 

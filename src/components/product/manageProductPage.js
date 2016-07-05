@@ -80,7 +80,7 @@ var ManageProductPage = React.createClass({
 		}
 		
 		this.setState({dirty: false});
-		toastr.success('Product saved.');
+		toastr.success('Product saved successfully.');
 		this.transitionTo('Products');
 	},
 
