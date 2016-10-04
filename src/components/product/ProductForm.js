@@ -17,7 +17,7 @@ var ProductForm = React.createClass({
 		return (
 			<form>
 				<h1>Add Product</h1>
-				<Input
+				<Input id="Name"
 					name="Name"
 					label="Product Name"
 					value={this.props.Product.Name}
@@ -25,21 +25,21 @@ var ProductForm = React.createClass({
 					error={this.props.errors.Name} />
                     
 
-				<Input
+				<Input id="Description"
 					name="Description"
 					label="Description"
 					value={this.props.Product.Description}
 					onChange={this.props.onChange}
 					/>
                    
-				<Input
+				<Input id="Price"
 					name="Price"
 					label="Price"
 					value={this.props.Product.Price}
 					onChange={this.props.onChange}
 					/>
                     <div className="col-md-1">
-				<input type="submit" value="Save" className="btn btn-info" onClick={this.props.onSave}/>
+				<input type="submit" id="btnAdd" value="Save" className="btn btn-info" onClick={this.props.onSave}/>
                 </div>
 				<Link className="btn btn-link" to="app">Cancel</Link>
 			</form>

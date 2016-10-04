@@ -303,7 +303,6 @@ function isUndefined(arg) {
 
 },{}],2:[function(require,module,exports){
 // shim for using process in browser
-
 var process = module.exports = {};
 
 // cached from whatever global is present so that test runners that stub it
@@ -314,22 +313,84 @@ var process = module.exports = {};
 var cachedSetTimeout;
 var cachedClearTimeout;
 
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
 (function () {
-  try {
-    cachedSetTimeout = setTimeout;
-  } catch (e) {
-    cachedSetTimeout = function () {
-      throw new Error('setTimeout is not defined');
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
     }
-  }
-  try {
-    cachedClearTimeout = clearTimeout;
-  } catch (e) {
-    cachedClearTimeout = function () {
-      throw new Error('clearTimeout is not defined');
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
     }
-  }
 } ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
 var queue = [];
 var draining = false;
 var currentQueue;
@@ -354,7 +415,7 @@ function drainQueue() {
     if (draining) {
         return;
     }
-    var timeout = cachedSetTimeout(cleanUpNextTick);
+    var timeout = runTimeout(cleanUpNextTick);
     draining = true;
 
     var len = queue.length;
@@ -371,7 +432,7 @@ function drainQueue() {
     }
     currentQueue = null;
     draining = false;
-    cachedClearTimeout(timeout);
+    runClearTimeout(timeout);
 }
 
 process.nextTick = function (fun) {
@@ -383,7 +444,7 @@ process.nextTick = function (fun) {
     }
     queue.push(new Item(fun, args));
     if (queue.length === 1 && !draining) {
-        cachedSetTimeout(drainQueue, 0);
+        runTimeout(drainQueue);
     }
 };
 
@@ -23277,7 +23338,7 @@ module.exports = PathUtils;
 },{"invariant":44,"object-assign":45,"qs":46}],14:[function(require,module,exports){
 'use strict';
 
-var assign = require('react/lib/Object.assign');
+var assign = require('object-assign');
 var ReactPropTypes = require('react').PropTypes;
 var Route = require('./Route');
 
@@ -23304,7 +23365,7 @@ var PropTypes = assign({}, ReactPropTypes, {
 });
 
 module.exports = PropTypes;
-},{"./Route":16,"react":205,"react/lib/Object.assign":76}],15:[function(require,module,exports){
+},{"./Route":16,"object-assign":45,"react":205}],15:[function(require,module,exports){
 /**
  * Encapsulates a redirect to the given route.
  */
@@ -23324,7 +23385,7 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var assign = require('react/lib/Object.assign');
+var assign = require('object-assign');
 var invariant = require('invariant');
 var warning = require('./warning');
 var PathUtils = require('./PathUtils');
@@ -23520,7 +23581,7 @@ var Route = (function () {
 })();
 
 module.exports = Route;
-},{"./PathUtils":13,"./warning":42,"invariant":44,"react/lib/Object.assign":76}],17:[function(require,module,exports){
+},{"./PathUtils":13,"./warning":42,"invariant":44,"object-assign":45}],17:[function(require,module,exports){
 'use strict';
 
 var invariant = require('invariant');
@@ -23918,7 +23979,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = require('react');
-var assign = require('react/lib/Object.assign');
+var assign = require('object-assign');
 var PropTypes = require('../PropTypes');
 
 function isLeftClickEvent(event) {
@@ -24016,6 +24077,12 @@ var Link = (function (_React$Component) {
 
       if (props.activeStyle && this.getActiveState()) props.style = props.activeStyle;
 
+      delete props.to;
+      delete props.params;
+      delete props.query;
+      delete props.activeClassName;
+      delete props.activeStyle;
+
       return React.DOM.a(props, this.props.children);
     }
   }]);
@@ -24042,7 +24109,7 @@ Link.defaultProps = {
 };
 
 module.exports = Link;
-},{"../PropTypes":14,"react":205,"react/lib/Object.assign":76}],26:[function(require,module,exports){
+},{"../PropTypes":14,"object-assign":45,"react":205}],26:[function(require,module,exports){
 'use strict';
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -24240,7 +24307,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 
 var React = require('react');
 var ContextWrapper = require('./ContextWrapper');
-var assign = require('react/lib/Object.assign');
+var assign = require('object-assign');
 var PropTypes = require('../PropTypes');
 
 var REF_NAME = '__routeHandler__';
@@ -24336,7 +24403,7 @@ RouteHandler.childContextTypes = {
 };
 
 module.exports = RouteHandler;
-},{"../PropTypes":14,"./ContextWrapper":23,"react":205,"react/lib/Object.assign":76}],30:[function(require,module,exports){
+},{"../PropTypes":14,"./ContextWrapper":23,"object-assign":45,"react":205}],30:[function(require,module,exports){
 (function (process){
 /* jshint -W058 */
 'use strict';
@@ -24856,7 +24923,7 @@ module.exports = createRouter;
 'use strict';
 
 var React = require('react');
-var assign = require('react/lib/Object.assign');
+var assign = require('object-assign');
 var warning = require('./warning');
 var DefaultRoute = require('./components/DefaultRoute');
 var NotFoundRoute = require('./components/NotFoundRoute');
@@ -24933,7 +25000,7 @@ function createRoutesFromReactChildren(children) {
 }
 
 module.exports = createRoutesFromReactChildren;
-},{"./Route":16,"./components/DefaultRoute":24,"./components/NotFoundRoute":26,"./components/Redirect":27,"./warning":42,"react":205,"react/lib/Object.assign":76}],32:[function(require,module,exports){
+},{"./Route":16,"./components/DefaultRoute":24,"./components/NotFoundRoute":26,"./components/Redirect":27,"./warning":42,"object-assign":45,"react":205}],32:[function(require,module,exports){
 'use strict';
 
 var invariant = require('invariant');
@@ -46402,6 +46469,7 @@ var React = require('react');
 
 var Input = React.createClass({displayName: "Input",
   propTypes: {
+    id: React.PropTypes.string.isRequired,
     name: React.PropTypes.string.isRequired,
     label: React.PropTypes.string.isRequired,
     onChange: React.PropTypes.func.isRequired,
@@ -46429,6 +46497,7 @@ var Input = React.createClass({displayName: "Input",
         React.createElement("span", {style: requiredSpanStyle}, "*"), 
          React.createElement("div", {className: "field"}, 
              React.createElement("input", {type: "text", 
+                 id: this.props.id, 
                  name: this.props.name, 
                  className: "form-control", 
                  placeholder: this.props.placeholder, 
@@ -46484,7 +46553,7 @@ var ProductForm = React.createClass({displayName: "ProductForm",
 		return (
 			React.createElement("form", null, 
 				React.createElement("h1", null, "Add Product"), 
-				React.createElement(Input, {
+				React.createElement(Input, {id: "Name", 
 					name: "Name", 
 					label: "Product Name", 
 					value: this.props.Product.Name, 
@@ -46492,21 +46561,21 @@ var ProductForm = React.createClass({displayName: "ProductForm",
 					error: this.props.errors.Name}), 
                     
 
-				React.createElement(Input, {
+				React.createElement(Input, {id: "Description", 
 					name: "Description", 
 					label: "Description", 
 					value: this.props.Product.Description, 
 					onChange: this.props.onChange}
 					), 
                    
-				React.createElement(Input, {
+				React.createElement(Input, {id: "Price", 
 					name: "Price", 
 					label: "Price", 
 					value: this.props.Product.Price, 
 					onChange: this.props.onChange}
 					), 
                     React.createElement("div", {className: "col-md-1"}, 
-				React.createElement("input", {type: "submit", value: "Save", className: "btn btn-info", onClick: this.props.onSave})
+				React.createElement("input", {type: "submit", id: "btnAdd", value: "Save", className: "btn btn-info", onClick: this.props.onSave})
                 ), 
 				React.createElement(Link, {className: "btn btn-link", to: "app"}, "Cancel")
 			)
@@ -46665,7 +46734,9 @@ var ProductList = React.createClass({displayName: "ProductList",
                                 React.createElement("h2", null, "Product List")
                           ), 
                           React.createElement("div", {className: "col-md-3 col-md-offset-6"}, 
-                               React.createElement(Link, {to: "addProduct", className: "btn btn-primary"}, "Add Product")
+                            React.createElement("span", {id: "lnkAddProduct"}, 
+                                    React.createElement(Link, {to: "addProduct", className: "btn btn-primary"}, "Add Product")
+                            )
                           )
                           ), 
                              React.createElement("div", {className: "row"}, 

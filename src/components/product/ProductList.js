@@ -146,7 +146,9 @@ var ProductList = React.createClass({
                                 <h2>Product List</h2>
                           </div>
                           <div className="col-md-3 col-md-offset-6">
-                               <Link to="addProduct" className="btn btn-primary">Add Product</Link>
+                            <span id="lnkAddProduct">
+                                    <Link to="addProduct" className="btn btn-primary">Add Product</Link>
+                            </span>
                           </div>
                           </div>
                              <div className="row">

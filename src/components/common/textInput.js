@@ -4,6 +4,7 @@ var React = require('react');
 
 var Input = React.createClass({
   propTypes: {
+    id: React.PropTypes.string.isRequired,
     name: React.PropTypes.string.isRequired,
     label: React.PropTypes.string.isRequired,
     onChange: React.PropTypes.func.isRequired,
@@ -30,7 +31,8 @@ var Input = React.createClass({
         <label htmlFor={this.props.name}>{this.props.label}</label>
         <span style={requiredSpanStyle}>*</span>
          <div className="field">
-             <input type="text"
+             <input type="text" 
+                 id={this.props.id}
                  name={this.props.name}
                  className="form-control"
                  placeholder={this.props.placeholder}
